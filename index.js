@@ -3,7 +3,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cors());
@@ -90,6 +90,11 @@ async function run() {
       }
     });
   } finally {
+    // Keep the connection alive
+    process.on("SIGINT", async () => {
+      await client.close();
+      process.exit(0);
+    });
   }
 }
 run().catch(console.dir);
