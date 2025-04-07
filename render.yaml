@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: taskmaster-server
+    env: node
+    buildCommand: pnpm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
